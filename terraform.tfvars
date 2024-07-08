@@ -1,0 +1,16 @@
+vsphere_user     = "--"
+vsphere_password = "--"
+vsphere_server   = "192.168.7.12"
+resource_name    = "test-Debian12"
+vm_count         = 1
+num_cpus         = 8
+memory           = 8192
+vm_ips           = "192.168.7.226"
+ipv4_gateway     = "192.168.7.1"
+host_name        = "hostname"
+domain           = "domain"
+hard_disk        = "SSD-2TB_174"
+hard_disk_size   = 60
+template_vm_name = "Base-Template-Debian12"
+vsphere_compute_cluster = "MTYN"
+vsphere_network = "Beroozresaan"
