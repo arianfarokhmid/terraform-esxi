@@ -1,5 +1,5 @@
 vsphere_user            = "terraform@vsphere.local"
-vsphere_password        = "Aa@123456"
+vsphere_password        = "67767"
 vsphere_server          = "192.168.7.12"
 resource_name           = "sandbox4"
 vm_count                = 1
