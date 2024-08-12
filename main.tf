@@ -40,8 +40,8 @@ resource "vsphere_virtual_machine" "vm" {
 
   disk {
     label = "disk0"
-    size  = var.hard_disk_size
-    #size = data.vsphere_virtual_machine.template.disks.0.size
+    #size  = var.hard_disk_size
+    size             = data.vsphere_virtual_machine.template.disks.0.size
     eagerly_scrub    = data.vsphere_virtual_machine.template.disks.0.eagerly_scrub
     thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
@@ -64,20 +64,43 @@ resource "vsphere_virtual_machine" "vm" {
 
 
     }
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sleep 30",
-      "echo '${var.ssh_password}' | sudo -S apt install lynis"
-      #"sudo apt install lynis -y"
-    ]
 
+  }
+  #provisioner "remote-exec" {
+  #  inline = [
+  #    "echo '${var.ssh_password}' | sudo -S apt update"
+  #  ]
+  #  connection {
+  #    type     = "ssh"
+  #    user     = var.ssh_user
+  #    password = var.ssh_password
+  #    host     = self.default_ip_address
+  #    timeout  = "10m"
+  #  }
+  #}
+}
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [vsphere_virtual_machine.vm]
+
+  create_duration = "30s"
+}
+
+resource "null_resource" "after" {
+depends_on = [time_sleep.wait_30_seconds]
+provisioner "remote-exec" {
+    inline = [
+      "echo '${var.ssh_password}' | sudo -S apt update"
+    ]
     connection {
       type     = "ssh"
       user     = var.ssh_user
       password = var.ssh_password
-      host     = self.default_ip_address
+      host     = "192.168.7.222"
       timeout  = "10m"
     }
   }
+
 }
+
+
+
