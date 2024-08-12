@@ -14,5 +14,5 @@ hard_disk_size          = 40
 template_vm_name        = "ubuntu-template"
 vsphere_compute_cluster = "MTYN"
 vsphere_network         = "Beroozresaan"
-ssh_user                = "support"
-ssh_password            = "S polar,$17 "
+ssh_user                = "-"
+ssh_password            = "-"
