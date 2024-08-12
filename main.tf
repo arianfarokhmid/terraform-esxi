@@ -60,6 +60,24 @@ resource "vsphere_virtual_machine" "vm" {
       }
       ipv4_gateway    = var.ipv4_gateway
       dns_server_list = ["8.8.8.8", "8.8.4.4"]
+
+
+
+    }
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sleep 30",
+      "echo '${var.ssh_password}' | sudo -S apt install lynis"
+      #"sudo apt install lynis -y"
+    ]
+
+    connection {
+      type     = "ssh"
+      user     = var.ssh_user
+      password = var.ssh_password
+      host     = self.default_ip_address
+      timeout  = "10m"
     }
   }
 }

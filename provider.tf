@@ -1,10 +1,10 @@
 #terraform {
-#  backend "repository" {
+#  backend "nexus" {
 #    url      = "http://127.0.0.1:8081/repository/"
 #    repo     = "terraform" 
 #    subpath  = "example"
 #    username = "admin"
-#    password = "admin123"
+#    password = "a9bd9cdf-30b9-4ed2-926d-106956962451"
 #  }
 #}
 provider "vsphere" {

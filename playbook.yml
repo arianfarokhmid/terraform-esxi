@@ -1,0 +1,16 @@
+---
+- name: Install Lynis and update repository on Linux
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update APT package repository cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install Lynis
+      apt:
+        name: lynis
+        state: present
+
