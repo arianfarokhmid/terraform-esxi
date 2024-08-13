@@ -86,7 +86,7 @@ resource "time_sleep" "wait_1_min" {
 }
 
 resource "null_resource" "after" {
-depends_on = [time_sleep.wait_30_seconds]
+depends_on = [time_sleep.wait_1_min]
 provisioner "remote-exec" {
     inline = [
       "echo '${var.ssh_password}' | sudo -S apt update",
