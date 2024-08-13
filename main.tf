@@ -82,14 +82,15 @@ resource "vsphere_virtual_machine" "vm" {
 resource "time_sleep" "wait_30_seconds" {
   depends_on = [vsphere_virtual_machine.vm]
 
-  create_duration = "30s"
+  create_duration = "1m"
 }
 
 resource "null_resource" "after" {
 depends_on = [time_sleep.wait_30_seconds]
 provisioner "remote-exec" {
     inline = [
-      "echo '${var.ssh_password}' | sudo -S apt update"
+      "echo '${var.ssh_password}' | sudo -S apt update",
+      "echo '${var.ssh_password}' | sudo -S apt install lynis -y"
     ]
     connection {
       type     = "ssh"
@@ -99,7 +100,6 @@ provisioner "remote-exec" {
       timeout  = "10m"
     }
   }
-
 }
 
 

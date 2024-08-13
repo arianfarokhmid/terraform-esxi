@@ -1,5 +1,5 @@
 vsphere_user            = "terraform@vsphere.local"
-vsphere_password        = "Aa@123456"
+vsphere_password        = "changeme"
 vsphere_server          = "192.168.7.12"
 resource_name           = "sandbox4"
 vm_count                = 1
@@ -15,4 +15,4 @@ template_vm_name        = "ubuntu-template"
 vsphere_compute_cluster = "MTYN"
 vsphere_network         = "Beroozresaan"
 ssh_user                = "support"
-ssh_password            = "S polar,$17 "
+ssh_password            = "changeme"
