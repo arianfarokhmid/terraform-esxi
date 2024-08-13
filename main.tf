@@ -79,7 +79,7 @@ resource "vsphere_virtual_machine" "vm" {
   #  }
   #}
 }
-resource "time_sleep" "wait_30_seconds" {
+resource "time_sleep" "wait_1_min" {
   depends_on = [vsphere_virtual_machine.vm]
 
   create_duration = "1m"
