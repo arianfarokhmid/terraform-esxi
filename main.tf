@@ -24,7 +24,7 @@ data "vsphere_virtual_machine" "template" {
 
 resource "vsphere_virtual_machine" "vm" {
   count            = var.vm_count
-  name             = var.resource_name
+  name             = "terraform-test-${count.index}"
   resource_pool_id = data.vsphere_compute_cluster.MTYN.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
 
@@ -40,8 +40,8 @@ resource "vsphere_virtual_machine" "vm" {
 
   disk {
     label = "disk0"
-    #size  = var.hard_disk_size
-    size             = data.vsphere_virtual_machine.template.disks.0.size
+    size  = var.hard_disk_size
+    #size = data.vsphere_virtual_machine.template.disks.0.size
     eagerly_scrub    = data.vsphere_virtual_machine.template.disks.0.eagerly_scrub
     thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
@@ -50,57 +50,16 @@ resource "vsphere_virtual_machine" "vm" {
     template_uuid = data.vsphere_virtual_machine.template.id
     customize {
       linux_options {
-        host_name = var.host_name
+        host_name = "test-${count.index}"
         domain    = var.domain
 
       }
       network_interface {
-        ipv4_address = var.vm_ips
+        ipv4_address = "192.168.7.24${count.index}"
         ipv4_netmask = 24
       }
       ipv4_gateway    = var.ipv4_gateway
       dns_server_list = ["8.8.8.8", "8.8.4.4"]
-
-
-
-    }
-
-  }
-  #provisioner "remote-exec" {
-  #  inline = [
-  #    "echo '${var.ssh_password}' | sudo -S apt update"
-  #  ]
-  #  connection {
-  #    type     = "ssh"
-  #    user     = var.ssh_user
-  #    password = var.ssh_password
-  #    host     = self.default_ip_address
-  #    timeout  = "10m"
-  #  }
-  #}
-}
-resource "time_sleep" "wait_1_min" {
-  depends_on = [vsphere_virtual_machine.vm]
-
-  create_duration = "1m"
-}
-
-resource "null_resource" "after" {
-depends_on = [time_sleep.wait_1_min]
-provisioner "remote-exec" {
-    inline = [
-      "echo '${var.ssh_password}' | sudo -S apt update",
-      "echo '${var.ssh_password}' | sudo -S apt install lynis -y"
-    ]
-    connection {
-      type     = "ssh"
-      user     = var.ssh_user
-      password = var.ssh_password
-      host     = "192.168.7.222"
-      timeout  = "10m"
     }
   }
 }
-
-
-

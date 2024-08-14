@@ -29,5 +29,3 @@ variable "hard_disk_size" {
 }
 variable "vsphere_compute_cluster" {}
 variable "vsphere_network" {}
-variable "ssh_user" {}
-variable "ssh_password" {}
