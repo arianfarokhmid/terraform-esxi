@@ -7,6 +7,11 @@ data "vsphere_datastore" "datastore" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
+data "vsphere_host" "host" {
+  name          = var.host
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
 data "vsphere_compute_cluster" "MTYN" {
   name          = var.vsphere_compute_cluster
   datacenter_id = data.vsphere_datacenter.datacenter.id
